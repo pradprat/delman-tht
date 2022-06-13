@@ -7,6 +7,7 @@ import {
     Icon,
     Link,
     Text,
+    Tooltip,
     useColorModeValue,
 } from "@chakra-ui/react";
 import {
@@ -66,18 +67,13 @@ export const SidebarContent = ({ onClose, isOpen, ...rest }: SidebarProps) => {
                 </Text>
                 <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex> */}
-            <NavItem
-                key={"menu"}
-                icon={FiMenu}
-                onClick={onClose}
-                h={12}
-                p={6}
-            >
+            <NavItem key={"menu"} name={"menu"} icon={FiMenu} onClick={onClose} h={12} p={6}>
                 {isOpen ? "Menu" : ""}
             </NavItem>
             {LinkItems.map(link => (
                 <NavItem
                     key={link.name}
+                    tooltip={isOpen ? "" : link.name}
                     href={link.href}
                     icon={link.icon}
                     active={router.asPath === link.href}
@@ -95,9 +91,10 @@ interface NavItemProps extends FlexProps {
     active?: boolean;
     href?: string;
     icon?: IconType;
-    children: ReactText;
+    children: any;
+    tooltip?: string;
 }
-const NavItem = ({ active, icon, href, children, ...rest }: NavItemProps) => {
+const NavItem = ({ active, icon, href, children, tooltip, ...rest }: NavItemProps) => {
     const router = useRouter();
 
     return (
@@ -112,33 +109,35 @@ const NavItem = ({ active, icon, href, children, ...rest }: NavItemProps) => {
             style={{ textDecoration: "none" }}
             _focus={{ boxShadow: "none" }}
         >
-            <Flex
-                align="center"
-                p="4"
-                m={"2"}
-                mx="4"
-                borderRadius="lg"
-                role="group"
-                cursor="pointer"
-                bg={active ? "cyan.400" : "unset"}
-                color={active ? "white" : "unset"}
-                _hover={{
-                    bg: "cyan.400",
-                    color: "white",
-                    textDecor: "none",
-                }}
-                {...rest}
-            >
-                <Icon
-                    mr="4"
-                    fontSize="16"
-                    _groupHover={{
+            <Tooltip label={tooltip} key={"tooltip" + tooltip}>
+                <Flex
+                    align="center"
+                    p="4"
+                    m={"2"}
+                    mx="4"
+                    borderRadius="lg"
+                    role="group"
+                    cursor="pointer"
+                    bg={active ? "cyan.400" : "unset"}
+                    color={active ? "white" : "unset"}
+                    _hover={{
+                        bg: "cyan.400",
                         color: "white",
+                        textDecor: "none",
                     }}
-                    as={icon}
-                />
-                {children}
-            </Flex>
+                    {...rest}
+                >
+                    <Icon
+                        mr="4"
+                        fontSize="16"
+                        _groupHover={{
+                            color: "white",
+                        }}
+                        as={icon}
+                    />
+                    {children}
+                </Flex>
+            </Tooltip>
         </Link>
     );
 };
