@@ -17,7 +17,7 @@ const Registration = () => {
             .then(res => {
                 toast({
                     title: "User created.",
-                    description: "User "+name+" created",
+                    description: "User " + name + " created",
                     status: "success",
                     duration: 3000,
                     isClosable: true,
