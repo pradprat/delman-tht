@@ -67,7 +67,14 @@ export const SidebarContent = ({ onClose, isOpen, ...rest }: SidebarProps) => {
                 </Text>
                 <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex> */}
-            <NavItem key={"menu"} name={"menu"} icon={FiMenu} onClick={onClose} h={12} p={6}>
+            <NavItem
+                key={"menu"}
+                tooltip={isOpen ? "" : "menu"}
+                icon={FiMenu}
+                onClick={onClose}
+                h={12}
+                p={6}
+            >
                 {isOpen ? "Menu" : ""}
             </NavItem>
             {LinkItems.map(link => (
