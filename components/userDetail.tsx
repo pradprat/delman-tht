@@ -4,6 +4,7 @@ import {
     DrawerBody,
     DrawerCloseButton,
     DrawerContent,
+    DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
     Grid,
@@ -11,14 +12,45 @@ import {
     HStack,
     Text,
     useDisclosure,
+    useToast,
     VStack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { deleteUser } from "../services/services";
 interface UserDetailProps {
     isOpen: boolean;
     onClose: () => void;
     userData?: any;
 }
 const UserDetail = ({ isOpen, onClose, userData }: UserDetailProps) => {
+    const toast = useToast();
+    const router = useRouter();
+
+    const onDelete = async () => {
+        deleteUser(userData.id)
+            .then(res => {
+                toast({
+                    title: "User deleted.",
+                    description: "User " + userData.name + " deleted",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                    position: "top",
+                });
+                router.push("/users");
+            })
+            .catch(err => {
+                const res = err.response;
+                toast({
+                    title: "Failed to delete User",
+                    description: res.data.message,
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                    position: "top",
+                });
+            });
+    };
     return (
         <>
             <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"md"}>
@@ -43,6 +75,11 @@ const UserDetail = ({ isOpen, onClose, userData }: UserDetailProps) => {
                                 })}
                         </VStack>
                     </DrawerBody>
+                    <DrawerFooter>
+                        <Button colorScheme="red" onClick={onDelete}>
+                            Delete User
+                        </Button>
+                    </DrawerFooter>
                 </DrawerContent>
             </Drawer>
         </>
