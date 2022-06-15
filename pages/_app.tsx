@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-import "react-virtualized/styles.css";
 import "@inovua/reactdatagrid-community/index.css";
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";

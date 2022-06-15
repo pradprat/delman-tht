@@ -1,6 +1,5 @@
 import { Heading } from "@chakra-ui/react";
 import styles from "./index.module.scss";
-const { Column, Table } = require("react-virtualized");
 import DataGrid from "react-data-grid";
 import ReactDataGrid from "@inovua/reactdatagrid-community";
 import { useTable } from "../hooks/useTable";
