@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const mainReducer = createSlice({
     name: "Main",
-    initialState: [] as string[],
+    initialState: {
+        isOpenSidebar: true,
+    },
     reducers: {
-        addName: (state, action: PayloadAction<string>) => {
-            state.push(action.payload);
+        toggleSidebar: (state) => {
+            state.isOpenSidebar = !state.isOpenSidebar;
         },
     },
 });

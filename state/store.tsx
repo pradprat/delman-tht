@@ -7,7 +7,7 @@ import { MainReducer } from "./mainReducer";
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["example"],
+    whitelist: ["main"],
 };
 
 const persistedReducer = persistReducer(
@@ -30,5 +30,7 @@ const persistor = persistStore(store);
 const state = store.getState;
 
 export type State = ReturnType<typeof state>;
+
+export type AppDispatch = typeof store.dispatch;
 
 export { store, persistor };

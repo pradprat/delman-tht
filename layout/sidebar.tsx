@@ -26,6 +26,8 @@ import { BsFillGrid1X2Fill } from "react-icons/bs";
 import { IconType } from "react-icons";
 import { ReactText, useState } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 interface LinkItemProps {
     href: string;
@@ -103,6 +105,7 @@ interface NavItemProps extends FlexProps {
 }
 const NavItem = ({ active, icon, href, children, tooltip, ...rest }: NavItemProps) => {
     const router = useRouter();
+    
 
     return (
         <Link

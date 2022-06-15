@@ -5,12 +5,16 @@ import Head from "next/head";
 import { ReactElement, useState } from "react";
 import { SidebarContent } from "./sidebar";
 import styles from "./layout.module.scss";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { MainAction, MainReducer } from "../state/mainReducer";
 
 interface LayoutProps {
     children: ReactElement;
 }
 export default function Layout({ children }: any) {
-    const [isOpen, setisOpen] = useState(true);
+    // const [isOpen, setisOpen] = useState(true);
+    const isOpen = useAppSelector(state => state.main.isOpenSidebar);
+    const dispatch = useAppDispatch();
     return (
         <>
             <div className={styles.container}>
@@ -26,7 +30,7 @@ export default function Layout({ children }: any) {
                 <main className={styles.main}>
                     <SidebarContent
                         isOpen={isOpen}
-                        onClose={() => setisOpen(!isOpen)}
+                        onClose={() => dispatch(MainAction.toggleSidebar())}
                     ></SidebarContent>
                     <Box
                         transition="0.5s ease"
