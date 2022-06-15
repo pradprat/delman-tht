@@ -1,32 +1,30 @@
 import { Heading } from "@chakra-ui/react";
 import styles from "./index.module.scss";
 const { Column, Table } = require("react-virtualized");
+import DataGrid from "react-data-grid";
+import ReactDataGrid from "@inovua/reactdatagrid-community";
+import { useTable } from "../hooks/useTable";
+import { useEffect } from "react";
+import { getSalesData } from "../services/services";
+import { useQuery } from "react-query";
 
 const Dashboard = () => {
-    const list = [
-        { name: "Brian Vaughn", description: "Software engineer" },
-        { name: "Brian Vaughn", description: "Software engineer" },
-        { name: "Brian Vaughn", description: "Software engineer" },
-        { name: "Brian Vaughn", description: "Software engineer" },
-        { name: "Brian Vaughn", description: "Software engineer" },
-        // And so on...
-    ];
+    const { isLoading, error, data } = useQuery("salesData", () =>
+        getSalesData().then(res => res.data.data),
+    );
+    const [dataTable, columnTable] = useTable(data);
     return (
         <>
             <Heading fontWeight={700} fontSize={"4xl"} m={2} mb={4}>
                 Dashboard
             </Heading>
-            <Table
-                width={300}
-                height={300}
-                headerHeight={20}
-                rowHeight={30}
-                rowCount={list.length}
-                rowGetter={({ index }: { index: number }) => list[index]}
-            >
-                <Column label="Name" dataKey="name" width={100} />
-                <Column width={200} label="Description" dataKey="description" />
-            </Table>
+            <ReactDataGrid
+                loading={isLoading}
+                idProperty="id"
+                columns={columnTable}
+                dataSource={dataTable}
+                style={{ minHeight: 550 }}
+            />
         </>
     );
 };
