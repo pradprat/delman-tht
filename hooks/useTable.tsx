@@ -9,9 +9,10 @@ export const useTable = (data: any) => {
             if (data[0]) {
                 const row = data[0];
                 const keys = Object.keys(row);
-                const column = keys.map(key => ({ name: key }));
+                const column = keys.map((key) => ({ name: key }));
                 settableColumn(column);
                 settableData(data);
+                console.log(column, data);
             }
         }
         return () => {};
